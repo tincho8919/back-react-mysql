@@ -43,15 +43,6 @@ appmysql.use((err, req, res, next) => {
     res.status(500).json({ error: 'Error interno del servidor' });
   });
 
-/* app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({extended:true}));
-app.use('/blogs', blogRoutes); */
 
-
-/* app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({extended:true}));
-app.use('/Product', ProductRouter); */
 
 

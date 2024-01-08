@@ -5,16 +5,12 @@ const mysql = require ("mysql2")
 dotenv.config();
 
 const dbmysql = mysql.createConnection({
-    host: process.env.HOSTDATA,
-    user: process.env.USERDATA,
-    password: process.env.PASSDATA,
-    port: process.env.PORTDATA,
-    database: process.env.DATABASE
-   /*  host:'',
-    user:'',
-    password:'',
-    port:'',
-    database:'' */
+    host: 'bdvuhxeu2tqeon8hmdd0-mysql.services.clever-cloud.com',
+    user: 'uyn30cdj8nkxtayf',
+    password: '7rCTnz6nm1VhrCgXhytb',
+    port: '3306',
+    database: 'bdvuhxeu2tqeon8hmdd0'
+   
 
 });
 
@@ -25,7 +21,7 @@ dbmysql.connect((err) =>{
         console.error('Error en la conexión a la base de datos:', err);
         return;
       }
-    console.log(`Conexion a la database ${process.env.DATABASE} conexion exitosa`);
+    console.log(`Conexion a la database ${'bdvuhxeu2tqeon8hmdd0'} conexion exitosa`);
         
 });
 
