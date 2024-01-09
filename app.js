@@ -47,16 +47,23 @@ appmysql.use((err, req, res, next) => {
 dbmysql.on('error', function (err) {
     console.error('Error de conexión a la base de datos:', err);
     if (err.code === 'PROTOCOL_CONNECTION_LOST') {
-        // Reconectar en caso de pérdida de conexión
-        dbmysql.connect(function (err) {
-            if (err) {
-                console.error('Error al reconectar:', err);
-            }
-        });
+        // La conexión se perdió, intentar reconectar
+        handleDisconnect();
     } else {
         throw err;
     }
 });
+
+function handleDisconnect() {
+    dbmysql.connect(function (err) {
+        if (err) {
+            console.error('Error al reconectar:', err);
+            setTimeout(handleDisconnect, 2000); // Intentar reconectar después de 2 segundos
+        } else {
+            console.log('Reconexión exitosa a la base de datos');
+        }
+    });
+}
 
 appmysql.use((err, req, res, next) => {
     console.error(err.stack);
