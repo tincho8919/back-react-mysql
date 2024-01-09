@@ -46,7 +46,7 @@ appmysql.use((err, req, res, next) => {
 // Manejar errores de conexión a la base de datos
 dbmysql.on('error', function (err) {
     console.error('Error de conexión a la base de datos:', err);
-    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+    if (err.code === 'npm start') {
         // La conexión se perdió, intentar reconectar
         handleDisconnect();
     } else {
