@@ -43,6 +43,22 @@ appmysql.use((err, req, res, next) => {
     res.status(500).json({ error: 'Error interno del servidor' });
   });
 
+// Manejar errores de conexión a la base de datos
+dbmysql.on('error', function (err) {
+    console.error('Error de conexión a la base de datos:', err);
+    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+        // Reconectar en caso de pérdida de conexión
+        dbmysql.connect(function (err) {
+            if (err) {
+                console.error('Error al reconectar:', err);
+            }
+        });
+    } else {
+        throw err;
+    }
+});
 
-
-
+appmysql.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ error: 'Error interno del servidor' });
+});
