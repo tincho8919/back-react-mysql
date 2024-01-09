@@ -1,6 +1,7 @@
 const express = require ("express")
 const cors = require ('cors')
 //importamos la conexión a la DB
+const { exec } = require('child_process');
 const dbmysql = require ('./datbasemysql/databasemysql.js')
 //importamos nuestro enrutador
 const routermysql = require ('./routers/usermysql.js')
@@ -47,21 +48,25 @@ appmysql.use((err, req, res, next) => {
 dbmysql.on('error', function (err) {
     console.error('Error de conexión a la base de datos:', err);
     if (err.code === 'PROTOCOL_CONNECTION_LOST') {
-        // La conexión se perdió, intentar reconectar
-        handleDisconnect();
+        // La conexión se perdió, intentar reiniciar la aplicación
+        restartApplication();
     } else {
         throw err;
     }
 });
 
-function handleDisconnect() {
-    dbmysql.connect(function (err) {
-        if (err) {
-            console.error('Error al reconectar:', err);
-            setTimeout(handleDisconnect, 2000); // Intentar reconectar después de 2 segundos
-        } else {
-            console.log('Reconexión exitosa a la base de datos');
+function restartApplication() {
+    console.log('Reiniciando la aplicación...');
+    exec('npm start', (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Error al reiniciar la aplicación: ${error.message}`);
+            return;
         }
+        if (stderr) {
+            console.error(`Error al reiniciar la aplicación: ${stderr}`);
+            return;
+        }
+        console.log(`Aplicación reiniciada exitosamente: ${stdout}`);
     });
 }
 
