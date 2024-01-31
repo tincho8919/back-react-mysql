@@ -44,7 +44,7 @@ appmysql.use((err, req, res, next) => {
     res.status(500).json({ error: 'Error interno del servidor' });
   });
 
-// Manejar errores de conexión a la base de datos
+/* // Manejar errores de conexión a la base de datos
 dbmysql.on('error', function (err) {
     console.error('Error de conexión a la base de datos:', err);
     if (err.code === 'PROTOCOL_CONNECTION_LOST') {
@@ -73,4 +73,4 @@ function restartApplication() {
 appmysql.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).json({ error: 'Error interno del servidor' });
-});
+}); */
